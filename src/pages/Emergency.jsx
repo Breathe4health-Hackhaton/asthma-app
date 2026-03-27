@@ -11,7 +11,7 @@ export default function Emergency({ user }) {
     <div className="flex flex-col gap-4" style={{ paddingBottom: '2rem', minHeight: 'calc(100vh - 2rem)' }}>
       {/* Top red header */}
       <div className="flex justify-between items-center bg-danger p-5 rounded-b-3xl -mt-4 -mx-4 mb-2 text-black shadow-lg" style={{ paddingTop: '2.5rem' }}>
-        <Link to="/" className="text-white hover:text-white font-bold inline-block" style={{ textDecoration: 'none' }}>&larr; Kapat</Link>
+        <Link to="/" className="text-black hover:text-black font-bold inline-block" style={{ textDecoration: 'none' }}>&larr; Kapat</Link>
         <h1 className="text-lg font-black tracking-wide">ACİL DURUM KARTI</h1>
         <div style={{ width: '60px' }}></div>
       </div>

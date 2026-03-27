@@ -22,24 +22,24 @@ export default function Lifestyle() {
       setBreathPhase('Nefes Al');
       setBreathCount(4);
       setCircleScale(1.5);
-      
+
       timer = setTimeout(() => {
         setBreathPhase('İçinde Tut');
         setBreathCount(7);
         setCircleScale(1.5); // stays expanded
-        
+
         timer = setTimeout(() => {
           setBreathPhase('Yavaşça Ver');
           setBreathCount(8);
           setCircleScale(1);
-          
+
           timer = setTimeout(cycle, 8000);
         }, 7000);
       }, 4000);
     };
 
     cycle();
-    
+
     const countdown = setInterval(() => {
       setBreathCount(c => c > 0 ? c - 1 : 0);
     }, 1000);
@@ -66,8 +66,8 @@ export default function Lifestyle() {
         const product = await fetchProductInfo(text, userAllergies);
         setScanResult(product);
         setLoadingProduct(false);
-      }, (error) => {});
-      
+      }, (error) => { });
+
       window.qrScanner = scanner;
     }, 100);
   };
@@ -80,11 +80,11 @@ export default function Lifestyle() {
   const simulateScan = async () => {
     setLoadingProduct(true);
     setScanResult({
-        found: true,
-        name: "Örnek Katkılı Hazır Çorba",
-        brand: "Knorr",
-        dangerous: true,
-        warnings: ["Monosodyum Glutamat (MSG) tespit edildi.", "Sülfit (Koruyucu Madde) tespit edildi. Astım atağını tetikleyebilir!"]
+      found: true,
+      name: "Örnek Katkılı Hazır Çorba",
+      brand: "Knorr",
+      dangerous: true,
+      warnings: ["Monosodyum Glutamat (MSG) tespit edildi.", "Sülfit (Koruyucu Madde) tespit edildi. Astım atağını tetikleyebilir!"]
     });
     setLoadingProduct(false);
   };
@@ -93,22 +93,6 @@ export default function Lifestyle() {
     <div className="flex flex-col gap-4 relative">
       <h1 className="text-xl font-bold mb-1">Yaşam Tarzı & Asistan</h1>
 
-      {/* Medication Reminder */}
-      <div className="card shadow-sm border-0" style={{ borderLeftColor: 'var(--primary)', borderLeftWidth: '5px' }}>
-        <div className="flex items-start justify-between">
-          <div className="flex gap-3">
-            <div className="bg-primary-light p-2.5 rounded-full h-11 w-11 flex items-center justify-center">
-              <Bell className="text-primary" size={22} />
-            </div>
-            <div>
-              <h3 className="text-base font-bold">İlaç & Kontrol</h3>
-              <p className="text-xs text-muted mb-2">Düzenli İnhaler kullanımı</p>
-              <div className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md inline-block">14:00 - Egzersiz Öncesi</div>
-            </div>
-          </div>
-          <button className="btn p-1 text-primary bg-transparent text-sm cursor-pointer">Alındı</button>
-        </div>
-      </div>
 
       {/* Barcode Scanner */}
       <div className="card bg-surface shadow-sm border-0">
@@ -127,26 +111,26 @@ export default function Lifestyle() {
             <div className="w-full flex flex-col items-center">
               <div className="flex justify-between w-full mb-2">
                 <h3 className="font-bold text-sm">Barkodu Okutun</h3>
-                <button onClick={closeScanner} className="cursor-pointer border-0 bg-transparent"><X size={20} className="text-danger"/></button>
+                <button onClick={closeScanner} className="cursor-pointer border-0 bg-transparent"><X size={20} className="text-danger" /></button>
               </div>
               <div id="reader" className="w-full rounded-lg overflow-hidden border"></div>
             </div>
           )}
         </div>
-        
+
         {loadingProduct && <div className="text-center p-3 text-sm font-bold text-primary animate-pulse">Ürün Sorgulanıyor...</div>}
-        
+
         {scanResult && !loadingProduct && (
           <div className="mt-4 p-3 rounded-xl border animate-fade-in bg-slate-50">
             <div className="flex justify-between items-start mb-2">
-               <h4 className="font-bold text-lg">{scanResult.name} <span className="text-xs text-muted block">{scanResult.brand}</span></h4>
-               <button onClick={() => setScanResult(null)} className="text-muted border-0 bg-transparent cursor-pointer"><X size={16}/></button>
+              <h4 className="font-bold text-lg">{scanResult.name} <span className="text-xs text-muted block">{scanResult.brand}</span></h4>
+              <button onClick={() => setScanResult(null)} className="text-muted border-0 bg-transparent cursor-pointer"><X size={16} /></button>
             </div>
             {scanResult.dangerous ? (
               <div className="bg-danger-light p-3 rounded-lg border border-red-200">
                 <div className="flex items-center gap-2 text-danger font-bold mb-2"><AlertTriangle size={18} /> RİSKLİ İÇERİK!</div>
                 <ul className="text-xs text-danger font-medium flex flex-col gap-1 pl-5 list-disc">
-                  {scanResult.warnings.map((w,i)=><li key={i}>{w}</li>)}
+                  {scanResult.warnings.map((w, i) => <li key={i}>{w}</li>)}
                 </ul>
               </div>
             ) : (
@@ -179,60 +163,60 @@ export default function Lifestyle() {
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
           backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', 
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
           pointerEvents: 'auto'
         }}>
-           <div className="card" style={{
-              width: '90%', maxWidth: '340px', position: 'relative',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem 1.5rem'
-           }}>
-              <button 
-                onClick={() => setBreathingActive(false)} 
-                style={{
-                  position: 'absolute', top: '12px', right: '12px',
-                  background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer'
-                }}>
-                <X size={24}/>
-              </button>
-              
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '3rem 0', width: '100%' }}>
-                 {/* Outer Ripple */}
-                 <div style={{ 
-                        position: 'absolute',
-                        borderRadius: '50%', border: '2px solid var(--primary)', 
-                        width: '180px', height: '180px', 
-                        transform: `scale(${circleScale * 1.1})`, 
-                        transition: `transform ${breathPhase.includes('Al') ? '4s' : (breathPhase.includes('Ver') ? '8s' : '0.5s')} ease-in-out`,
-                        opacity: breathPhase.includes('Tut') ? 0.2 : 0.4 
-                      }}></div>
-                 
-                 {/* Inner Ripple */}
-                 <div style={{ 
-                        position: 'absolute',
-                        borderRadius: '50%', background: 'var(--primary-light)', 
-                        width: '140px', height: '140px', 
-                        transform: `scale(${circleScale})`, 
-                        transition: `transform ${breathPhase.includes('Al') ? '4s' : (breathPhase.includes('Ver') ? '8s' : '0.5s')} ease-in-out` 
-                      }}></div>
-                 
-                 {/* Inner Circle Content */}
-                 <div style={{ 
-                        position: 'relative', zIndex: 10,
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                        background: 'white', borderRadius: '50%', border: '3px solid var(--primary)',
-                        width: '100px', height: '100px', boxShadow: 'var(--shadow-md)'
-                      }}>
-                    <span className="text-4xl font-bold text-primary">{breathCount}</span>
-                 </div>
+          <div className="card" style={{
+            width: '90%', maxWidth: '340px', position: 'relative',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem 1.5rem'
+          }}>
+            <button
+              onClick={() => setBreathingActive(false)}
+              style={{
+                position: 'absolute', top: '12px', right: '12px',
+                background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer'
+              }}>
+              <X size={24} />
+            </button>
+
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '3rem 0', width: '100%' }}>
+              {/* Outer Ripple */}
+              <div style={{
+                position: 'absolute',
+                borderRadius: '50%', border: '2px solid var(--primary)',
+                width: '180px', height: '180px',
+                transform: `scale(${circleScale * 1.1})`,
+                transition: `transform ${breathPhase.includes('Al') ? '4s' : (breathPhase.includes('Ver') ? '8s' : '0.5s')} ease-in-out`,
+                opacity: breathPhase.includes('Tut') ? 0.2 : 0.4
+              }}></div>
+
+              {/* Inner Ripple */}
+              <div style={{
+                position: 'absolute',
+                borderRadius: '50%', background: 'var(--primary-light)',
+                width: '140px', height: '140px',
+                transform: `scale(${circleScale})`,
+                transition: `transform ${breathPhase.includes('Al') ? '4s' : (breathPhase.includes('Ver') ? '8s' : '0.5s')} ease-in-out`
+              }}></div>
+
+              {/* Inner Circle Content */}
+              <div style={{
+                position: 'relative', zIndex: 10,
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                background: 'white', borderRadius: '50%', border: '3px solid var(--primary)',
+                width: '100px', height: '100px', boxShadow: 'var(--shadow-md)'
+              }}>
+                <span className="text-4xl font-bold text-primary">{breathCount}</span>
               </div>
-              
-              <h2 className="text-2xl font-bold text-center" style={{ minHeight: '36px' }}>
-                {breathPhase}
-              </h2>
-              <p className="text-xs text-muted text-center mt-2 font-medium" style={{ lineHeight: 1.5 }}>
-                Nefes ritmine odaklanarak rahatlayın.
-              </p>
-           </div>
+            </div>
+
+            <h2 className="text-2xl font-bold text-center" style={{ minHeight: '36px' }}>
+              {breathPhase}
+            </h2>
+            <p className="text-xs text-muted text-center mt-2 font-medium" style={{ lineHeight: 1.5 }}>
+              Nefes ritmine odaklanarak rahatlayın.
+            </p>
+          </div>
         </div>
       )}
 

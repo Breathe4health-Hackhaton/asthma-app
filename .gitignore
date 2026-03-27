@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+public/*.onnx
+public/*.wasm
+public/*.mjs
+merge_model.py
+dist/
