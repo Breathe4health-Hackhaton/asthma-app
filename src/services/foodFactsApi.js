@@ -1,6 +1,6 @@
 export async function fetchProductInfo(barcode, userAllergies = "") {
   try {
-    const response = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
+    const response = await fetch(`https://tr.openfoodfacts.org/api/v2/product/${barcode}.json`);
     const data = await response.json();
     
     if (data.status === 1) {
