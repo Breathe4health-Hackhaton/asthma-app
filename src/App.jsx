@@ -14,7 +14,7 @@ import ProfilePage from './pages/Profile';
 function BottomNav() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path ? 'var(--primary)' : 'var(--text-muted)';
-  
+
   if (location.pathname === '/emergency') return null;
 
   return (
@@ -61,12 +61,12 @@ function Layout({ children }) {
 function Header() {
   const location = useLocation();
   if (location.pathname === '/emergency') return null;
-  
+
   return (
     <div className="header flex justify-between items-center bg-surface w-full">
       <div className="flex items-center gap-2">
         <Wind size={28} className="text-primary" />
-        <h1 className="text-xl text-primary font-bold" style={{ letterSpacing: '-0.5px' }}>Nefesim</h1>
+        <h1 className="text-xl text-primary font-bold" style={{ letterSpacing: '-0.5px' }}>SpiroMine</h1>
       </div>
       <Link to="/emergency" className="btn btn-danger-outline" style={{ padding: '0.5rem 0.75rem', width: 'auto', borderRadius: '12px', textDecoration: 'none' }}>
         <AlertCircle size={20} />
@@ -78,7 +78,7 @@ function Header() {
 
 export default function App() {
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const saved = localStorage.getItem('asthma-user');
     if (saved) setUser(JSON.parse(saved));

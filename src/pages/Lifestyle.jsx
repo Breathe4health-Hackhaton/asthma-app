@@ -2,6 +2,30 @@ import { useState, useEffect } from 'react';
 import { Bell, ScanBarcode, Heart, X, CheckCircle, AlertTriangle } from 'lucide-react';
 import { fetchProductInfo } from '../services/foodFactsApi';
 import { Html5QrcodeScanner } from 'html5-qrcode';
+import { motion, AnimatePresence } from 'framer-motion';
+import BreathingFigure from '../pages/BreathingFigure';
+
+const chestVariants = {
+  'Nefes Al': {
+    scale: 1.25,
+    translateY: '-20px',
+    boxShadow: '0 0 40px rgba(96, 165, 250, 0.5)',
+    transition: { duration: 4, ease: "easeInOut" }
+  },
+  'İçinde Tut': {
+    scale: 1.28,
+    translateY: '-22px',
+    boxShadow: '0 0 25px rgba(234, 179, 8, 0.3)',
+    transition: { duration: 7, ease: "linear" }
+  },
+  'Yavaşça Ver': {
+    scale: 1,
+    translateY: '0px',
+    boxShadow: 'none',
+    transition: { duration: 8, ease: "easeInOut" }
+  }
+};
+
 
 export default function Lifestyle() {
   const [breathingActive, setBreathingActive] = useState(false);
@@ -158,67 +182,39 @@ export default function Lifestyle() {
         <button onClick={() => setBreathingActive(true)} className="btn w-full font-bold bg-danger-light text-danger py-3 border-0 rounded-xl cursor-pointer">Egzersize Başla</button>
       </div>
 
-      {/* Pop-up Breathing Exercise Modal */}
-      {breathingActive && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
-          backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          pointerEvents: 'auto'
-        }}>
-          <div className="card" style={{
-            width: '90%', maxWidth: '340px', position: 'relative',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem 1.5rem'
+
+      <AnimatePresence>
+        {breathingActive && (
+          <div style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
+            backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <button
-              onClick={() => setBreathingActive(false)}
-              style={{
+            <div className="card" style={{
+              width: '92%', maxWidth: '360px', position: 'relative',
+              display: 'flex', flexDirection: 'column', alignItems: 'center',
+              padding: '1.5rem 1rem'
+            }}>
+              <button onClick={() => setBreathingActive(false)} style={{
                 position: 'absolute', top: '12px', right: '12px',
-                background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer'
+                background: 'none', border: 'none', cursor: 'pointer'
               }}>
-              <X size={24} />
-            </button>
+                <X size={24} />
+              </button>
 
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '3rem 0', width: '100%' }}>
-              {/* Outer Ripple */}
-              <div style={{
-                position: 'absolute',
-                borderRadius: '50%', border: '2px solid var(--primary)',
-                width: '180px', height: '180px',
-                transform: `scale(${circleScale * 1.1})`,
-                transition: `transform ${breathPhase.includes('Al') ? '4s' : (breathPhase.includes('Ver') ? '8s' : '0.5s')} ease-in-out`,
-                opacity: breathPhase.includes('Tut') ? 0.2 : 0.4
-              }}></div>
+              {/* İnsan figürü SVG */}
+              <BreathingFigure phase={breathPhase} />
 
-              {/* Inner Ripple */}
-              <div style={{
-                position: 'absolute',
-                borderRadius: '50%', background: 'var(--primary-light)',
-                width: '140px', height: '140px',
-                transform: `scale(${circleScale})`,
-                transition: `transform ${breathPhase.includes('Al') ? '4s' : (breathPhase.includes('Ver') ? '8s' : '0.5s')} ease-in-out`
-              }}></div>
-
-              {/* Inner Circle Content */}
-              <div style={{
-                position: 'relative', zIndex: 10,
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                background: 'white', borderRadius: '50%', border: '3px solid var(--primary)',
-                width: '100px', height: '100px', boxShadow: 'var(--shadow-md)'
-              }}>
-                <span className="text-4xl font-bold text-primary">{breathCount}</span>
+              <h2 style={{ fontSize: '22px', fontWeight: 600, margin: '8px 0 4px', minHeight: '32px' }}>
+                {breathPhase || 'Hazır'}
+              </h2>
+              <div style={{ fontSize: '52px', fontWeight: 700, color: '#2176AE', minHeight: '64px', lineHeight: 1 }}>
+                {breathCount}
               </div>
             </div>
-
-            <h2 className="text-2xl font-bold text-center" style={{ minHeight: '36px' }}>
-              {breathPhase}
-            </h2>
-            <p className="text-xs text-muted text-center mt-2 font-medium" style={{ lineHeight: 1.5 }}>
-              Nefes ritmine odaklanarak rahatlayın.
-            </p>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
     </div>
   );
